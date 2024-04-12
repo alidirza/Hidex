@@ -38,12 +38,12 @@ def decode_operation():
         print("This encryption key is not found in this file.")
 
 def info_operation():
-    print("Hidex is a Python program designed for combining data with files, providing functionalities for both encoding and decoding operations. It enables users to seamlessly merge additional data with existing files, allowing for various applications such as data embedding or file fusion. The program offers a simple command-line interface where users can select between encoding and decoding modes, providing flexibility and ease of use.")
-    print("github/alidirza")
+    print("\n Hidex is a Python program designed for combining data with files, providing functionalities for both encoding and decoding operations. It enables users to seamlessly merge additional data with existing files, allowing for various applications such as data embedding or file fusion. The program offers a simple command-line interface where users can select between encoding and decoding modes, providing flexibility and ease of use.")
+    print("\n github/alidirza \n")
 
 def main():
-    print("Welcome to the hidex")
-    operation = input("Enter 'encode' for the encoding operation or 'decode' for the decoding operation, for more info enter 'info': ").lower()
+    print("\n Welcome to the hidex")
+    operation = input("\n Enter 'encode' for the encoding operation or 'decode' for the decoding operation, for more info enter 'info': ").lower()
     
     if operation == 'encode':
         encode_operation()
