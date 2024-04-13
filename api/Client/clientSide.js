@@ -1,36 +1,62 @@
 const axios = require('axios');
+const readline = require('readline');
 
-const firstImageUrl = 'https://example.io/1.png';
-const secondImageUrl = 'https://example.io/2.png';
-const combinedImageUrl = 'https://example.io/result.png';
-const encryptionKey = 'secretKey';
-const serverAdress = 'http://localhost:3000';
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+let serverAdress;
 
 async function encodeImages() {
-    try {
-        const response = await axios.post(serverAdress+'/encode', {
-            firstImageUrl,
-            secondImageUrl,
-            encryptionKey,
+    rl.question('Enter first image URL: ', async (firstImageUrl) => {
+        rl.question('Enter second image URL: ', async (secondImageUrl) => {
+            rl.question('Enter encryption key: ', async (encryptionKey) => {
+                try {
+                    const response = await axios.post(serverAdress+'/encode', {
+                        firstImageUrl,
+                        secondImageUrl,
+                        encryptionKey,
+                    });
+                    console.log(response.data);
+                } catch (error) {
+                    console.error('Error encoding images:', error.response ? error.response.data : error.message);
+                } finally {
+                    rl.close();
+                }
+            });
         });
-        console.log(response.data);
-    } catch (error) {
-        console.error('Error encoding images:', error.response ? error.response.data : error.message);
-    }
+    });
 }
 
 async function decodeImage() {
-    try {
-        const response = await axios.post(serverAdress+'/decode', {
-            combinedImageUrl,
-            encryptionKey,
+    rl.question('Enter combined image URL: ', async (combinedImageUrl) => {
+        rl.question('Enter encryption key: ', async (encryptionKey) => {
+            try {
+                const response = await axios.post(serverAdress+'/decode', {
+                    combinedImageUrl,
+                    encryptionKey,
+                });
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error decoding image:', error.response ? error.response.data : error.message);
+            } finally {
+                rl.close();
+            }
         });
-        console.log(response.data);
-    } catch (error) {
-        console.error('Error decoding image:', error.response ? error.response.data : error.message);
-    }
+    });
 }
 
-
-encodeImages();
-decodeImage();
+rl.question('Enter server address: ', (address) => {
+    serverAdress = address;
+    rl.question('Do you want to encode or decode? (encode/decode): ', (operation) => {
+        if(operation === 'encode') {
+            encodeImages();
+        } else if(operation === 'decode') {
+            decodeImage();
+        } else {
+            console.error('Invalid operation selected');
+            rl.close();
+        }
+    });
+});
