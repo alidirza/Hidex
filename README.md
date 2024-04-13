@@ -14,13 +14,14 @@ Flexibility: Hidex supports various file types for additional data, offering fle
 Efficient Data Handling: The program efficiently handles the merging and extraction of data, ensuring integrity and accuracy in the combined files.
 
 ## Quick Start:
+###### Note: This Python script can work with most file types please make sure that while encoding the first file's type is the same as the combined file's type, and while decoding make sure that the combined file's type is the same as the decoded file's type. If these are not the same, the program can not function as expected.
 ```shell
 git clone https://github.com/alidirza/Hidex.git && cd Hidex
 python3 hidex.py
 ```
 ## Api Usage:
 With Hidex API, photos can be merged from any coding environment.
-###### Note: Api can only be used for merging photos, other file types can make trouble with api.
+###### Note: Unlike the Python script API can only be used for merging photos, other file types can have trouble with API.
 ##### Server-Side Installation:
 ```shell
 git clone https://github.com/alidirza/Hidex.git && cd Hidex && cd api && cd Server
