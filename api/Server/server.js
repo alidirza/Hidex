@@ -6,11 +6,86 @@ const fs = require('fs');
 const uuid = require('uuid');
 
 const app = express();
-const port = 3000;
+port = 3000;
 
 app.use(bodyParser.json());
 
 const imageLinks = {};
+
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+let server;
+console.log(`Port is ${port}`);
+console.log(`Please enter "start", "change port", or "stop".`);
+rl.setPrompt('Command > ');
+rl.prompt();
+
+rl.on('line', (input) => {
+    const command = input.trim().toLowerCase();
+
+    switch (command) {
+        case 'start':
+            startServer();
+            break;
+        case 'change port':
+            changePort();
+            break;
+        case 'stop':
+            stopServer();
+            break;
+        default:
+            console.log('Invalid command. Please enter "start", "change port", or "stop".');
+    }
+
+    rl.prompt();
+});
+
+function startServer() {
+    if (server) {
+        console.log('Server is already running.');
+        return;
+    }
+
+    server = app.listen(port, () => {
+        console.log(`Server listening at http://localhost:${port}`);
+    });
+}
+
+function changePort() {
+    rl.question('Enter new port number: ', (newPort) => {
+        if (server) {
+            server.close(() => {
+                port = parseInt(newPort);
+                server = app.listen(port, () => {
+                    console.log(`Server now listening at http://localhost:${port}`);
+                    rl.prompt();
+                });
+            });
+        } else {
+            port = parseInt(newPort);
+            console.log(`Port changed to ${port}`);
+            rl.prompt();
+        }
+    });
+}
+
+function stopServer() {
+    if (server) {
+        server.close(() => {
+            console.log('Server stopped.');
+            server = undefined;
+            rl.prompt();
+        });
+    } else {
+        console.log('Server is not running.');
+    }
+}
+
 
 app.post('/encode', async (req, res) => {
     const { firstImageUrl, secondImageUrl, encryptionKey } = req.body;
@@ -26,6 +101,8 @@ app.post('/encode', async (req, res) => {
 
         const imageUrl = `${req.protocol}://${req.get('host')}/images/${imageId}`;
         writeImageLinkToFile(imageId, imageUrl);
+        console.log(`Encoding: ${firstImageUrl} and ${secondImageUrl} with key: ${encryptionKey}`);
+        console.log(`Result: ${imageUrl} with key: ${encryptionKey}`);
 
         res.json({ imageUrl });
     } catch (err) {
@@ -55,10 +132,13 @@ app.post('/decode', async (req, res) => {
 
             const imageUrl = `${req.protocol}://${req.get('host')}/images/${imageId}`;
             writeImageLinkToFile(imageId, imageUrl);
+            console.log(`Decoding: ${combinedImageUrl} with key: ${encryptionKey}`);
+            console.log(`Result: ${imageUrl}`);
 
             res.json({ imageUrl });
         } else {
             res.status(400).send("Encryption key not found in combined image.");
+            console.log(`Encryption key not found in combined image.`);
         }
     } catch (err) {
         console.error("Error decoding image:", err);
@@ -105,8 +185,4 @@ app.get('/images/:imageId', (req, res) => {
         'Content-Disposition': 'inline'
     });
     res.end(imageData);
-});
-
-app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
 });
