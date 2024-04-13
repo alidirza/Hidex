@@ -18,6 +18,22 @@ Efficient Data Handling: The program efficiently handles the merging and extract
 git clone https://github.com/alidirza/Hidex.git && cd Hidex
 python3 hidex.py
 ```
+## Api Usage:
+With Hidex API, photos can be merged from any coding environment.
+###### Note: Api can only be used for merging photos, other file types can make trouble with api.
+##### Server-Side Installation:
+```shell
+git clone https://github.com/alidirza/Hidex.git && cd Hidex && cd api && cd Server
+npm install
+node server.js
+```
+##### Client Side Instalation:
+```shell
+git clone https://github.com/alidirza/Hidex.git && cd Hidex && cd api && cd Client
+npm install
+node clientSide.js
+```
+After installing the api, the client side is going to ask for the server address. If you installed the api locally enter the server address that the server-side code gives to you. If you are using a web-based node.js editor(glitch,replit, etc...) enter the URL of the server-side installed project to the client side's server address.
 
 ## Use Cases:
 
