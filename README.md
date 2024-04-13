@@ -21,7 +21,7 @@ python3 hidex.py
 ```
 ## Api Usage:
 With Hidex API, photos can be merged from any coding environment.
-###### Note: Unlike the Python script API can only be used for merging photos, other file types can have trouble with API.
+###### Note: Unlike the Python script, API can only be used for merging photos, other file types can have trouble with API.
 ##### Server-Side Installation:
 ```shell
 git clone https://github.com/alidirza/Hidex.git && cd Hidex && cd api && cd Server
