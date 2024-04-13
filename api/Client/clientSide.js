@@ -4,11 +4,11 @@ const firstImageUrl = 'https://example.io/1.png';
 const secondImageUrl = 'https://example.io/2.png';
 const combinedImageUrl = 'https://example.io/result.png';
 const encryptionKey = 'secretKey';
-const glitchServerAdress = 'branch-tulip-ankle';
+const serverAdress = 'http://localhost:3000';
 
 async function encodeImages() {
     try {
-        const response = await axios.post('https://'+glitchServerAdress+'.glitch.me/encode', {
+        const response = await axios.post(serverAdress+'/encode', {
             firstImageUrl,
             secondImageUrl,
             encryptionKey,
@@ -21,7 +21,7 @@ async function encodeImages() {
 
 async function decodeImage() {
     try {
-        const response = await axios.post('https://'+glitchServerAdress+'.glitch.me/decode', {
+        const response = await axios.post(serverAdress+'/decode', {
             combinedImageUrl,
             encryptionKey,
         });
