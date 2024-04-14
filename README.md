@@ -15,6 +15,8 @@ Efficient Data Handling: The program efficiently handles the merging and extract
 
 ## Quick Start:
 ###### Note: This Python script can work with most file types please make sure that while encoding the first file's type is the same as the combined file's type, and while decoding make sure that the combined file's type is the same as the decoded file's type. If these are not the same, the program can not function as expected.
+###### Note: Using text-based file formats is highly unrecommended. Text-based file formats can show both the key and the file's contents.
+###### Disclaimer: Hidex is a data combiner program. Hidex is not encrypting for the security of the file contents. Don't use Hidex for the primary security of the file.
 ```shell
 git clone https://github.com/alidirza/Hidex.git && cd Hidex
 python3 hidex.py
